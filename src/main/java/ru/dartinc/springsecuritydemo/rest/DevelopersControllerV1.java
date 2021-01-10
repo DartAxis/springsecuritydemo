@@ -1,9 +1,6 @@
 package ru.dartinc.springsecuritydemo.rest;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.dartinc.springsecuritydemo.model.Developer;
 
 import java.util.List;
@@ -31,4 +28,14 @@ public class DevelopersControllerV1 {
         return DEVELOPERS.stream().filter(developer -> developer.getId().equals(id)).findFirst().orElse(null);
     }
 
+    @PostMapping
+    public Developer createDeveloper(@RequestBody Developer developer){
+        this.DEVELOPERS.add(developer);
+        return developer;
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteByID(@PathVariable Long id){
+        this.DEVELOPERS.removeIf(developer -> developer.getId().equals(id));
+    }
 }
